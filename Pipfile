@@ -9,6 +9,7 @@ pillow = "*"
 python-decouple = "*"
 psycopg2 = "*"
 psycopg2-binary = "*"
+django-ckeditor-5 = "*"
 
 [dev-packages]
 
