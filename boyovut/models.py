@@ -2,6 +2,7 @@ from django.utils import timezone
 
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 from django.urls import reverse
 # Create your models here.
@@ -16,18 +17,33 @@ class Togarak_turlari(models.Model):
         verbose_name = 'To\'garak turi'
 
 class Togaraklar(models.Model):
+    class Status(models.TextChoices):
+        yangi = 'New',"Yangi ochilgan to'garaklar"
+        davom_etayotgan = 'Davom etayotgan',"Hozirda bo'layotgan to'garaklar"
+        tugagan = 'Yakunlangan',"Tugagan to'garaklar"
+
+
     nomi = models.CharField('nomi',max_length=100)
     image = models.ImageField(upload_to='togarak_images')
     turi = models.ForeignKey(Togarak_turlari, on_delete=models.PROTECT, null=True,blank=True)
     manzil = models.CharField(max_length=150)
-    oquvchilar_soni = models.PositiveIntegerField(blank=True,null=True)
+
+    oquvchilar_soni = models.PositiveIntegerField(
+        'O\'quvchilar soni',
+        blank=True,
+        null=True,
+        validators=[MinValueValidator(1), MaxValueValidator(100)]
+    )
+
     davomiyligi = models.CharField(max_length=150,blank=True,null=True)
     slug = models.SlugField(max_length=150,unique=True)
     boshlanish_sanasi = models.DateField(default=timezone.now)
     body = CKEditor5Field("To'garak haqida ba'tafsil",config_name='extends')
     body_small = CKEditor5Field("To'garak haqida qisqacha",max_length=250,config_name='extends')
     active = models.BooleanField(default=True)
-    # publish_time = models.DateTimeField(auto_now_add=True)
+    # updated_time qo'shish yaxshi variant ammo meni modelimga kerakmas
+    status = models.CharField(choices=Status.choices, default='yangi')
+
 
     def __str__(self):
         return self.nomi
@@ -40,10 +56,11 @@ class Togaraklar(models.Model):
         verbose_name = "To'garak"
 
 class Yangilik_va_tadbirlar(models.Model):
-    # class Status(models.TextChoices):
-    #     Draft = 'DF', 'Draft'
-    #     Published = 'PB', 'Published'
-    # status = models.CharField(max_length=2, choices=Status.choices, default=Status.Draft)
+    class Status(models.TextChoices):
+        yangi = 'New',"Yangi tadbirlar"
+        tugagan = 'Yakunlangan',"Yakunlangan tadbirlar"
+    status = models.CharField(choices=Status.choices, default='yangi')
+
     nomi = models.CharField(max_length=100)
     image = models.ImageField(upload_to='yangilik_images')
     manzil = models.CharField(max_length=150)
@@ -98,6 +115,12 @@ class Ustozlar(models.Model):
         verbose_name = "O'qituvchi"
 
 class Iqtibostlar(models.Model):
+    class Status(models.TextChoices):
+        yangi = 'New',"Yangi ochilgan to'garaklar"
+        davom_etayotgan = 'Davom etayotgan',"Hozirda bo'layotgan to'garaklar"
+        tugagan = 'Yakunlangan',"Tugagan to'garaklar"
+    status = models.CharField(choices=Status.choices, default='yangi')
+
     ism = models.CharField(max_length=100)
     familiya = models.CharField(max_length=100)
     email = models.EmailField(blank=True,null=True)
@@ -107,6 +130,7 @@ class Iqtibostlar(models.Model):
     image = models.ImageField(upload_to='iqtibost_images')
     active = models.BooleanField(default=True)
     publish_time = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f"{self.ism} {self.iqtibost_egasining_ismi} {self.iqtibost_egasining_familiyasi}"
 

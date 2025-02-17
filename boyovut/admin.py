@@ -17,18 +17,23 @@ from .models import (
 class Togarak_turlariAdmin(admin.ModelAdmin):
     list_didplay = ['id','name']
     search_fields = ['nomi']
+    ordering = ['id']
 
 @admin.register(Togaraklar)
 class TogaraklarAdmin(admin.ModelAdmin):
-    list_display = ['nomi','turi','davomiyligi','boshlanish_sanasi','active']
+    list_display = ['nomi','turi','davomiyligi','boshlanish_sanasi','active','status']
     list_filter = [
         'turi',
         'active',
+        'davomiyligi',
         ('boshlanish_sanasi',admin.DateFieldListFilter),
     ]
 
     #slugni avtomatik to'ldirish keyinchalik
     #prepopulated_fields = {'slug': ('title',)}
+
+    # faqat o'qish uchun
+    # readonly_fields = ['boshlanish_sanasi']
 
     # data_hierarchy yil oy kun bo'yicha ajratish uchun ishlatiladi
     date_hierarchy = 'boshlanish_sanasi'
@@ -51,7 +56,7 @@ class TogaraklarAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Umumiy ma\'lumotlar', {
-            'fields': ('nomi', 'turi', 'davomiyligi', 'manzil', 'boshlanish_sanasi', 'active')
+            'fields': ('nomi', 'turi', 'davomiyligi', 'manzil', 'boshlanish_sanasi', 'active','status')
         }),
         ('Qo\'shimcha ma\'lumotlar', {
             'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish
@@ -187,13 +192,54 @@ class UstozlarAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Umumiy ma\'lumotlar', {
-            'fields': ('name', 'last_name', 'father_name', 'active', 'publish_time')
+            'fields': ('name', 'last_name', 'father_name', 'active')
         }),
         ('Qo\'shimcha ma\'lumotlar', {
             'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish
             'fields': ('body', 'facebook', 'telegram', 'twitter','google', 'image')
         }),
     )
+
+@admin.register(Iqtibostlar)
+class IqtibostlarAdmin(admin.ModelAdmin):
+    list_display = ['ism','familiya','iqtibost_egasining_ismi','iqtibost_egasining_familiyasi','publish_time', 'active']
+    list_filter = [
+        'active',
+        ('publish_time',admin.DateFieldListFilter),
+    ]
+
+    #slugni avtomatik to'ldirish keyinchalik
+    #prepopulated_fields = {'slug': ('title',)}
+
+    # data_hierarchy yil oy kun bo'yicha ajratish uchun ishlatiladi
+    date_hierarchy = 'publish_time'
+    search_fields = ['ism','iqtibost_egasining_ismi']
+
+    # ordering tartiblash uchun ishlatiladi birinchi active bo'yicha keyin boshlanish_sanasi
+    ordering = ['active','publish_time']
+
+
+    # tahrirlash oynasni ochadi berilgan fieldlarni ustiga borganda
+    list_display_links = ['ism','familiya','iqtibost_egasining_ismi','iqtibost_egasining_familiyasi']
+
+    # quyidagi fieldlarni jadvalni o'zida to'g'irlash imkonini beradi editpagega kirmasdan
+    list_editable = ['active']
+
+    # nechta element ko'rsatishini belgilash
+    # list_per_page = 20
+
+
+
+    fieldsets = (
+        ('Umumiy ma\'lumotlar', {
+            'fields': ('ism','familiya','iqtibost_egasining_ismi','iqtibost_egasining_familiyasi', 'active')
+        }),
+        ('Qo\'shimcha ma\'lumotlar', {
+            'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish
+            'fields': ('body', 'email', 'image')
+        }),
+    )
+
 
 
 
