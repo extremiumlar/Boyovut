@@ -29,8 +29,9 @@ class TogaraklarAdmin(admin.ModelAdmin):
         ('boshlanish_sanasi',admin.DateFieldListFilter),
     ]
 
-    #slugni avtomatik to'ldirish keyinchalik
-    #prepopulated_fields = {'slug': ('title',)}
+    # slugni avtomatik to'ldirish keyinchalik
+
+    prepopulated_fields = {'slug': ('nomi',)}
 
     # faqat o'qish uchun
     # readonly_fields = ['boshlanish_sanasi']
@@ -122,14 +123,14 @@ class RasmlarAdmin(admin.ModelAdmin):
 
 @admin.register(Yangilik_va_tadbirlar)
 class Yangilik_va_tadbirlarAdmin(admin.ModelAdmin):
-    list_display = ['nomi','manzil','boshlanish_sanasi','active']
+    list_display = ['nomi','manzil','boshlanish_sanasi','active','status']
     list_filter = [
         'active',
         ('boshlanish_sanasi',admin.DateFieldListFilter),
     ]
 
     #slugni avtomatik to'ldirish keyinchalik
-    #prepopulated_fields = {'slug': ('title',)}
+    prepopulated_fields = {'slug': ('nomi',)}
 
     # data_hierarchy yil oy kun bo'yicha ajratish uchun ishlatiladi
     date_hierarchy = 'boshlanish_sanasi'
@@ -152,7 +153,7 @@ class Yangilik_va_tadbirlarAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Umumiy ma\'lumotlar', {
-            'fields': ('nomi', 'slug', 'manzil', 'boshlanish_sanasi', 'active')
+            'fields': ('nomi', 'slug', 'manzil', 'boshlanish_sanasi', 'active', 'status')
         }),
         ('Qo\'shimcha ma\'lumotlar', {
             'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish
@@ -241,6 +242,39 @@ class IqtibostlarAdmin(admin.ModelAdmin):
     )
 
 
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+
+    list_display = ['name','email','message','publish_time']
+    list_filter = [
+        'name',
+        ('publish_time',admin.DateFieldListFilter),
+    ]
+
+    #slugni avtomatik to'ldirish keyinchalik
+    #prepopulated_fields = {'slug': ('title',)}
+
+    # faqat o'qish uchun
+    # readonly_fields = ['boshlanish_sanasi']
+
+    # data_hierarchy yil oy kun bo'yicha ajratish uchun ishlatiladi
+    date_hierarchy = 'publish_time'
+    search_fields = ['name']
+
+    # ordering tartiblash uchun ishlatiladi birinchi active bo'yicha keyin boshlanish_sanasi
+    ordering = ['publish_time']
+
+
+    # tahrirlash oynasni ochadi berilgan fieldlarni ustiga borganda
+    list_display_links = ['name', 'email']
+
+    # nechta element ko'rsatishini belgilash
+    # list_per_page = 20
+
+
+admin.site.register(Numbers)
 
 
 

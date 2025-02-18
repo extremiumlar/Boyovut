@@ -76,6 +76,13 @@ class Yangilik_va_tadbirlar(models.Model):
     def get_absolute_url(self):
         pass
         # return reverse("yonalish_detail", kwargs={"slug": self.slug})
+
+    def save(self, *args, **kwargs):
+        # Agar tadbir vaqti o'tgan bo'lsa, statusni 'tugagan' ga o'zgartiramiz
+        if self.boshlanish_sanasi < timezone.now():
+            self.status = self.Status.tugagan
+        super().save(*args, **kwargs)
+
     class Meta:
         ordering = ['-boshlanish_sanasi']
         # ordering = ['publish_time'] # birinchi yozilgna birinchi chiqadi
@@ -115,11 +122,11 @@ class Ustozlar(models.Model):
         verbose_name = "O'qituvchi"
 
 class Iqtibostlar(models.Model):
-    class Status(models.TextChoices):
-        yangi = 'New',"Yangi ochilgan to'garaklar"
-        davom_etayotgan = 'Davom etayotgan',"Hozirda bo'layotgan to'garaklar"
-        tugagan = 'Yakunlangan',"Tugagan to'garaklar"
-    status = models.CharField(choices=Status.choices, default='yangi')
+    # class Status(models.TextChoices):
+    #     yangi = 'New',"Yaqinda yuklangan "
+    #     eski = 'Old', 'Oldin yuklangan'
+    #     tugagan = 'Yakunlangan',"Tugagan to'garaklar"
+    # status = models.CharField(choices=Status.choices, default='yangi')
 
     ism = models.CharField(max_length=100)
     familiya = models.CharField(max_length=100)
@@ -143,10 +150,12 @@ class Contact(models.Model):
     name = models.CharField(max_length=150)
     email = models.EmailField()
     message = models.TextField()
+    publish_time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
     class Meta:
+        ordering = ['-publish_time']
         verbose_name = "Bog'lanish"
         verbose_name_plural = "Bog'lanish"
 
