@@ -57,7 +57,7 @@ class TogaraklarAdmin(admin.ModelAdmin):
 
     fieldsets = (
         ('Umumiy ma\'lumotlar', {
-            'fields': ('nomi', 'turi', 'davomiyligi', 'manzil', 'boshlanish_sanasi', 'active','status')
+            'fields': ('nomi', 'slug', 'turi', 'davomiyligi', 'manzil', 'boshlanish_sanasi', 'active','status')
         }),
         ('Qo\'shimcha ma\'lumotlar', {
             'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish

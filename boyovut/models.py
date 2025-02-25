@@ -1,8 +1,10 @@
+from django.db.models import ForeignKey
 from django.utils import timezone
 
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ValidationError
 
 from django.urls import reverse
 # Create your models here.
@@ -42,7 +44,7 @@ class Togaraklar(models.Model):
     body_small = CKEditor5Field("To'garak haqida qisqacha",max_length=250,config_name='extends')
     active = models.BooleanField(default=True)
     # updated_time qo'shish yaxshi variant ammo meni modelimga kerakmas
-    status = models.CharField(choices=Status.choices, default='yangi')
+    status = models.CharField(choices=Status, default='yangi')
 
 
     def __str__(self):
@@ -51,7 +53,7 @@ class Togaraklar(models.Model):
         pass
         # return reverse("yonalish_detail", kwargs={"slug": self.slug})
     class Meta:
-        ordering = ['-boshlanish_sanasi']
+        ordering = ['boshlanish_sanasi']
         verbose_name_plural = "To'garaklar"
         verbose_name = "To'garak"
 
@@ -59,7 +61,7 @@ class Yangilik_va_tadbirlar(models.Model):
     class Status(models.TextChoices):
         yangi = 'New',"Yangi tadbirlar"
         tugagan = 'Yakunlangan',"Yakunlangan tadbirlar"
-    status = models.CharField(choices=Status.choices, default='yangi')
+    status = models.CharField(choices=Status, default='yangi')
 
     nomi = models.CharField(max_length=100)
     image = models.ImageField(upload_to='yangilik_images')
@@ -77,17 +79,13 @@ class Yangilik_va_tadbirlar(models.Model):
         pass
         # return reverse("yonalish_detail", kwargs={"slug": self.slug})
 
-    def save(self, *args, **kwargs):
-        # Agar tadbir vaqti o'tgan bo'lsa, statusni 'tugagan' ga o'zgartiramiz
-        if self.boshlanish_sanasi < timezone.now():
-            self.status = self.Status.tugagan
-        super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-boshlanish_sanasi']
+        ordering = ['boshlanish_sanasi']
         # ordering = ['publish_time'] # birinchi yozilgna birinchi chiqadi
         verbose_name_plural = "Yangiliklar va tadbirlar"
         verbose_name = "Yangilik va tadbir"
+
 
 class Numbers(models.Model):
     fanlar = models.PositiveIntegerField(default=0)
@@ -95,6 +93,18 @@ class Numbers(models.Model):
     labaratoriyalar = models.PositiveIntegerField(default=0)
     oqituvchilar = models.PositiveIntegerField(default=0)
 
+    def save(self, *args, **kwargs):
+        if Numbers.objects.exists() and not self.pk:
+            raise ValidationError("Faqat bitta object yaratish mumkin! Yaxshisi eski objectni tahrirlang")
+        super().save(*args, **kwargs)
+
+class UstozlarTuri(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
+    class Meta:
+        verbose_name_plural = "Ustoz dars beradigan fani"
+        verbose_name = "Ustoz dars beradigan fani"
 
 class Ustozlar(models.Model):
 
@@ -103,6 +113,7 @@ class Ustozlar(models.Model):
     father_name = models.CharField(max_length=100)
     body = CKEditor5Field(config_name='extends')
     image = models.ImageField(upload_to='ustozlar_images')
+    turi = ForeignKey(UstozlarTuri, on_delete=models.PROTECT)
     active = models.BooleanField(default=True)
 
     facebook = models.URLField(blank=True,null=True)
@@ -122,11 +133,6 @@ class Ustozlar(models.Model):
         verbose_name = "O'qituvchi"
 
 class Iqtibostlar(models.Model):
-    # class Status(models.TextChoices):
-    #     yangi = 'New',"Yaqinda yuklangan "
-    #     eski = 'Old', 'Oldin yuklangan'
-    #     tugagan = 'Yakunlangan',"Tugagan to'garaklar"
-    # status = models.CharField(choices=Status.choices, default='yangi')
 
     ism = models.CharField(max_length=100)
     familiya = models.CharField(max_length=100)

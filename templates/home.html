@@ -159,7 +159,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="mu-abtus-counter-single">
                                     <span class="fa fa-book"></span>
-                                    <h4 class="counter">568</h4>
+                                    <h4 class="counter">{{ numbers.fanlar }}</h4>
                                     <p>Fanlar</p>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="mu-abtus-counter-single">
                                     <span class="fa fa-users"></span>
-                                    <h4 class="counter">3500</h4>
+                                    <h4 class="counter">{{ numbers.oquvchilar }}</h4>
                                     <p>O'quvchilar</p>
                                 </div>
                             </div>
@@ -177,7 +177,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="mu-abtus-counter-single">
                                     <span class="fa fa-flask"></span>
-                                    <h4 class="counter">65</h4>
+                                    <h4 class="counter">{{ numbers.labaratoriyalar }}</h4>
                                     <p>Labaratoriyalar (yoki boshqa )</p>
                                 </div>
                             </div>
@@ -186,7 +186,7 @@
                             <div class="col-lg-3 col-md-3 col-sm-3">
                                 <div class="mu-abtus-counter-single no-border">
                                     <span class="fa fa-user-secret"></span>
-                                    <h4 class="counter">250</h4>
+                                    <h4 class="counter">{{ numbers.oqituvchilar }}</h4>
                                     <p>O'qituvchilar</p>
                                 </div>
                             </div>
@@ -290,127 +290,31 @@
                         <!-- End Title -->
                         <!-- Start latest course content -->
                         <div id="mu-latest-course-slide" class="mu-latest-courses-content">
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/1.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Drawing</a>
-                                            <span><i class="fa fa-clock-o"></i>90Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
+                            {% for togarak in togaraklar %}
+                                <div class="col-lg-4 col-md-4 col-xs-12">
+                                    <div class="mu-latest-course-single">
+                                        <figure class="mu-latest-course-img">
+                                            <a href="#"><img src="{{ togarak.image.url }}" alt="img"></a>
+                                            <figcaption class="mu-latest-course-imgcaption">
+                                                <a href="#">{{ togarak.turi }}</a>
+                                                <span><i class="fa fa-clock-o"></i>{{ togarak.davomiyligi }}</span>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="mu-latest-course-single-content">
+                                            <h4><a href="#">{{ togarak.nomi }}</a></h4>
+                                            {{ togarak.body_small|safe }}
+                                            <div class="mu-latest-course-single-contbottom">
+                                                <a class="mu-course-details" href="#">Ko'proq ko'rish .</a>
+                                                <span class="mu-course-price"
+                                                      href="#">{{ togarak.boshlanish_sanasi }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/2.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Engineering </a>
-                                            <span><i class="fa fa-clock-o"></i>75Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/3.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Academic</a>
-                                            <span><i class="fa fa-clock-o"></i>45Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/1.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Drawing</a>
-                                            <span><i class="fa fa-clock-o"></i>90Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/2.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Engineering </a>
-                                            <span><i class="fa fa-clock-o"></i>75Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-xs-12">
-                                <div class="mu-latest-course-single">
-                                    <figure class="mu-latest-course-img">
-                                        <a href="#"><img src="{% static 'assets/img/courses/3.jpg' %}" alt="img"></a>
-                                        <figcaption class="mu-latest-course-imgcaption">
-                                            <a href="#">Academic</a>
-                                            <span><i class="fa fa-clock-o"></i>45Days</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="mu-latest-course-single-content">
-                                        <h4><a href="#">Lorem ipsum dolor sit amet.</a></h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet quod nisi
-                                            quisquam modi dolore, dicta obcaecati architecto quidem ullam quia.</p>
-                                        <div class="mu-latest-course-single-contbottom">
-                                            <a class="mu-course-details" href="#">Details</a>
-                                            <span class="mu-course-price" href="#">$165.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {% endfor %}
+
                         </div>
+
                         <!-- End latest course content -->
                     </div>
                 </div>
@@ -435,86 +339,29 @@
                         <!-- begain our teacher content -->
                         <div class="mu-our-teacher-content">
                             <div class="row">
-                                <div class="col-lg-3 col-md-3  col-sm-6">
-                                    <div class="mu-our-teacher-single">
-                                        <figure class="mu-our-teacher-img">
-                                            <img src="{% static 'assets/img/teachers/teacher-01.png' %}"
-                                                 alt="teacher img">
-                                            <div class="mu-our-teacher-social">
-                                                <a href="#"><span class="fa fa-facebook"></span></a>
-                                                <a href="#"><span class="fa fa-twitter"></span></a>
-                                                <a href="#"><span class="fa fa-linkedin"></span></a>
-                                                <a href="#"><span class="fa fa-google-plus"></span></a>
+                                {% for ustoz in ustozlar %}
+                                    <div class="col-lg-3 col-md-3  col-sm-6">
+                                        <div class="mu-our-teacher-single">
+                                            <figure class="mu-our-teacher-img">
+                                                <img src="{% static 'assets/img/teachers/teacher-01.png' %}"
+                                                     alt="teacher img">
+                                                <div class="mu-our-teacher-social">
+                                                    <a href="#"><span class="fa fa-facebook"></span></a>
+                                                    <a href="#"><span class="fa fa-twitter"></span></a>
+                                                    <a href="#"><span class="fa fa-linkedin"></span></a>
+                                                    <a href="#"><span class="fa fa-google-plus"></span></a>
+                                                </div>
+                                            </figure>
+                                            <div class="mu-ourteacher-single-content">
+                                                <h4>Brian Dean</h4>
+                                                <span>Math Teacher</span>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique
+                                                    quod
+                                                    pariatur recusandae odio dignissimos. Eligendi.</p>
                                             </div>
-                                        </figure>
-                                        <div class="mu-ourteacher-single-content">
-                                            <h4>Brian Dean</h4>
-                                            <span>Math Teacher</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique quod
-                                                pariatur recusandae odio dignissimos. Eligendi.</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <div class="mu-our-teacher-single">
-                                        <figure class="mu-our-teacher-img">
-                                            <img src="{% static 'assets/img/teachers/teacher-02.png' %}"
-                                                 alt="teacher img">
-                                            <div class="mu-our-teacher-social">
-                                                <a href="#"><span class="fa fa-facebook"></span></a>
-                                                <a href="#"><span class="fa fa-twitter"></span></a>
-                                                <a href="#"><span class="fa fa-linkedin"></span></a>
-                                                <a href="#"><span class="fa fa-google-plus"></span></a>
-                                            </div>
-                                        </figure>
-                                        <div class="mu-ourteacher-single-content">
-                                            <h4>James Hein</h4>
-                                            <span>Physics Teacher</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique quod
-                                                pariatur recusandae odio dignissimos. Eligendi.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <div class="mu-our-teacher-single">
-                                        <figure class="mu-our-teacher-img">
-                                            <img src="{% static 'assets/img/teachers/teacher-03.png' %}"
-                                                 alt="teacher img">
-                                            <div class="mu-our-teacher-social">
-                                                <a href="#"><span class="fa fa-facebook"></span></a>
-                                                <a href="#"><span class="fa fa-twitter"></span></a>
-                                                <a href="#"><span class="fa fa-linkedin"></span></a>
-                                                <a href="#"><span class="fa fa-google-plus"></span></a>
-                                            </div>
-                                        </figure>
-                                        <div class="mu-ourteacher-single-content">
-                                            <h4>Rebeca Michel</h4>
-                                            <span>English Teacher</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique quod
-                                                pariatur recusandae odio dignissimos. Eligendi.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-3 col-sm-6">
-                                    <div class="mu-our-teacher-single">
-                                        <figure class="mu-our-teacher-img">
-                                            <img src="{% static 'assets/img/teachers/teacher-04.png' %}"
-                                                 alt="teacher img">
-                                            <div class="mu-our-teacher-social">
-                                                <a href="#"><span class="fa fa-facebook"></span></a>
-                                                <a href="#"><span class="fa fa-twitter"></span></a>
-                                                <a href="#"><span class="fa fa-linkedin"></span></a>
-                                                <a href="#"><span class="fa fa-google-plus"></span></a>
-                                            </div>
-                                        </figure>
-                                        <div class="mu-ourteacher-single-content">
-                                            <h4>John Doe</h4>
-                                            <span>Biology Teacher</span>
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Similique quod
-                                                pariatur recusandae odio dignissimos. Eligendi.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                         <!-- End our teacher content -->
@@ -610,69 +457,28 @@
                         <!-- start from blog content   -->
                         <div class="mu-from-blog-content">
                             <div class="row">
-                                <div class="col-md-4 col-sm-4">
-                                    <article class="mu-blog-single-item">
-                                        <figure class="mu-blog-single-img">
-                                            <a href="#"><img src="{% static 'assets/img/blog/blog-1.jpg' %}" alt="img"></a>
-                                            <figcaption class="mu-blog-caption">
-                                                <h3><a href="#">Lorem ipsum dolor sit amet.</a></h3>
-                                            </figcaption>
-                                        </figure>
-                                        <div class="mu-blog-meta">
-                                            <a href="#">By Admin</a>
-                                            <a href="#">02 June 2016</a>
-                                            <span><i class="fa fa-comments-o"></i>87</span>
-                                        </div>
-                                        <div class="mu-blog-description">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae ipsum
-                                                non voluptatum eum repellendus quod aliquid. Vitae, dolorum voluptate
-                                                quis repudiandae eos molestiae dolores enim.</p>
-                                            <a class="mu-read-more-btn" href="#">Read More</a>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <article class="mu-blog-single-item">
-                                        <figure class="mu-blog-single-img">
-                                            <a href="#"><img src="{% static 'assets/img/blog/blog-2.jpg' %}" alt="img"></a>
-                                            <figcaption class="mu-blog-caption">
-                                                <h3><a href="#">Lorem ipsum dolor sit amet.</a></h3>
-                                            </figcaption>
-                                        </figure>
-                                        <div class="mu-blog-meta">
-                                            <a href="#">By Admin</a>
-                                            <a href="#">02 June 2016</a>
-                                            <span><i class="fa fa-comments-o"></i>87</span>
-                                        </div>
-                                        <div class="mu-blog-description">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae ipsum
-                                                non voluptatum eum repellendus quod aliquid. Vitae, dolorum voluptate
-                                                quis repudiandae eos molestiae dolores enim.</p>
-                                            <a class="mu-read-more-btn" href="#">Read More</a>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="col-md-4 col-sm-4">
-                                    <article class="mu-blog-single-item">
-                                        <figure class="mu-blog-single-img">
-                                            <a href="#"><img src="{% static 'assets/img/blog/blog-3.jpg' %}" alt="img"></a>
-                                            <figcaption class="mu-blog-caption">
-                                                <h3><a href="#">Lorem ipsum dolor sit amet.</a></h3>
-                                            </figcaption>
-                                        </figure>
-                                        <div class="mu-blog-meta">
-                                            <a href="#">By Admin</a>
-                                            <a href="#">02 June 2016</a>
-                                            <span><i class="fa fa-comments-o"></i>87</span>
-                                        </div>
-                                        <div class="mu-blog-description">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae ipsum
-                                                non voluptatum eum repellendus quod aliquid. Vitae, dolorum voluptate
-                                                quis repudiandae eos molestiae dolores enim.</p>
-                                            <a class="mu-read-more-btn" href="#">Read More</a>
-                                        </div>
-                                    </article>
-                                </div>
+                                {% for yangilik in yangiliklar %}
+                                    <div class="col-md-4 col-sm-4">
+                                        <article class="mu-blog-single-item">
+                                            <figure class="mu-blog-single-img">
+                                                <a href="#"><img src="{{ yangilik.image.url }}"
+                                                                 alt="img"></a>
+                                                <figcaption class="mu-blog-caption">
+                                                    <h3><a href="#">{{ yangilik.nomi }}</a></h3>
+                                                </figcaption>
+                                            </figure>
+                                            <div class="mu-blog-meta">
+                                                <a href="#">{{ yangilik.boshlanish_sanasi }}</a>
+                                                <span><i class="fa fa-comments-o"></i>87</span>
+                                            </div>
+                                            <div class="mu-blog-description">
+                                                <p>{{ yangilik.body_small|safe }}</p>
+                                                <a class="mu-read-more-btn" href="#">KO'PROQ</a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                {% endfor %}
+
                             </div>
                         </div>
                         <!-- end from blog content   -->
