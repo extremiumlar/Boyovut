@@ -2548,30 +2548,3 @@ html {
   color: #0056b3; 
 }
 
-.mu-latest-course-single {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-.mu-latest-course-img {
-    width: 100%;
-    height: 200px; /* Barcha rasmlar bir xil bo‘lishi uchun */
-    overflow: hidden;
-}
-
-.mu-latest-course-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Rasmni avtomatik kesib, mos o‘lchamga keltirish */
-}
-
-.mu-latest-course-single-content {
-    flex-grow: 1; /* Kontent qismini cho'zib, barcha kartalarni bir xil qiladi */
-    display: flex;
-    flex-direction: column;
-}
-
-.mu-latest-course-single-contbottom {
-    margin-top: auto; /* Tugma va sanani pastda qoldirish */
-}

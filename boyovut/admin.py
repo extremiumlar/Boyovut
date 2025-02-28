@@ -9,7 +9,7 @@ from .models import (
     Iqtibostlar,
     Contact,
     RasmlarCategory,
-    Rasmlar,
+    Rasmlar, UstozlarTuri,
 )
 
 
@@ -163,7 +163,7 @@ class Yangilik_va_tadbirlarAdmin(admin.ModelAdmin):
 
 @admin.register(Ustozlar)
 class UstozlarAdmin(admin.ModelAdmin):
-    list_display = ['name','last_name','father_name','publish_time','active']
+    list_display = ['name','last_name','father_name','turi','publish_time','active']
     list_filter = [
         'active',
         ('publish_time',admin.DateFieldListFilter),
@@ -197,9 +197,12 @@ class UstozlarAdmin(admin.ModelAdmin):
         }),
         ('Qo\'shimcha ma\'lumotlar', {
             'classes': ('collapse',),  # Qisqartirilgan (collapse) holda ko'rsatish
-            'fields': ('body', 'facebook', 'telegram', 'twitter','google', 'image')
+            'fields': ('body', 'facebook', 'telegram', 'twitter','google', 'image', 'turi')
         }),
     )
+
+admin.site.register(UstozlarTuri)
+
 
 @admin.register(Iqtibostlar)
 class IqtibostlarAdmin(admin.ModelAdmin):
@@ -275,8 +278,6 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Numbers)
-
-
 
 
 

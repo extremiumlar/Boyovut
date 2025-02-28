@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from itertools import chain
 
 from django.views.generic import TemplateView
@@ -55,6 +55,9 @@ def HomeView(request):
 # iqtibostlar uchun alohida page qilish , hafta iqtibosti , oy iqtibosti , yil iqtibosti statuslarni modelga qo'shish
 # rasmlarni yuklaganda kachestvani belgilab qo'yish yoki dastur davomida moslashtirish
 
-# def togaraklarsingle_View(request, slug):
-#     Togaraklar = Togaraklar.objects.all().filter(slug=slug)
-#     return redirect('togaraklarsing', slug=slug)
+def togaraklarsingle_View(request, slug):
+    togarak = get_object_or_404(Togaraklar, slug=slug,active=True)
+    context = {
+        'Togaraklar': Togaraklar,
+    }
+    return render(request, 'togaraklar.html', context)

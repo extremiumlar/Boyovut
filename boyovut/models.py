@@ -50,8 +50,7 @@ class Togaraklar(models.Model):
     def __str__(self):
         return self.nomi
     def get_absolute_url(self):
-        pass
-        # return reverse("yonalish_detail", kwargs={"slug": self.slug})
+        return reverse("yonalish_detail", kwargs={"slug": self.slug})
     class Meta:
         ordering = ['boshlanish_sanasi']
         verbose_name_plural = "To'garaklar"
